@@ -1,31 +1,72 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
+session_start();
+
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'lib/vendor/autoload.php';
 include('conexao.php');
-$erro = "";
 
-if (isset($_POST['enviar'])) {
-  $banco = new PDO("mysql:host=localhost;dbname=pit", "root", "");
-  $usuario = $_POST['username'];
-  $senha = $_POST['password'];
-  $CPF = $_POST['cpf'];
-  $RG = $_POST['rg'];
-  $email = $_POST['email'];
-  $nome = $_POST['nome'];
-  $sobrenome = $_POST['sobrenome'];
-  $confirma = $_POST['password2'];
 
-  if ($senha == $confirma) {
-    $insert = $banco->prepare("INSERT INTO cadastromotorista(usuario,nome,sobrenome,senha,email,cpf,rg) VALUES(?,?,?,?,?,?,?)");
-    $insert->execute([$usuario, $nome, $sobrenome, $senha, $email, $CPF, $RG]);
-    header("Location: loginmotorisa.php");
-    exit();
-  } else if ($senha != $confirma) {
-    $erro = "FALHA NO CADASTRO!";
+if (isset($_POST['ok'])) {
+
+  $email2 = $_POST['email'];
+
+  $email = $mysqli->escape_string($_POST['email']);
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+    $erro[] = "E-mail Invalido.";
+  } else {
+
+    $SELECT = "SELECT * FROM loginusuario WHERE email='$email2'";
+    $LINHA = $mysqli->query($SELECT);
+    $result = $LINHA->fetch_assoc();
+    $Cpf = $result['cpf'];
+    $sql_code = "SELECT senha FROM loginusuario WHERE email = '$email'";
+    $sql_query = $mysqli->query($sql_code);
+    if ($sql_query) {
+
+      $novasenha = substr(md5(time()), 0, 6);
+      $novasenhacrip = md5(md5($novasenha));
+
+      $UPDATE = "UPDATE loginusuario SET codigo_redefinicao = '$novasenha' WHERE cpf='$Cpf'";
+      $mysqli->query($UPDATE);
+
+      $mail = new PHPMailer(true);
+      $mail->CharSet = 'UTF-8';
+      $mail->isSMTP();
+      $mail->Host = 'sandbox.smtp.mailtrap.io';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'f18ed907441d07';
+      $mail->Password = 'f3600b6db6ec06';
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Port = 2525;
+
+      $mail->setFrom('MauricioTeste@gmail.com', 'Mauricio');
+      $mail->addAddress($email, "teste");
+
+      $mail->isHTML(true);
+      $mail->Subject = 'CONFIRME O CÓDIGO';
+      $mail->Body = "código $novasenha<br> 
+                    <a href='http://localhost/ProjetoPIT/Novo.php?codredefinicao=$novasenha'>Clique aqui </a>";
+
+      $mail->AltBody = "Por favor confirme o código enviado. \n 'http://localhost/ProjetoPIT/Novo.php?chave=$novasenha'";
+
+
+      header("Location:RecuperarSenhaFinal.php");
+      $mail->send();
+      exit();
+    }
   }
 }
-?>
 
-<!DOCTYPE html>
+
+
+
+?>
 <html>
 
 <head>
@@ -33,153 +74,82 @@ if (isset($_POST['enviar'])) {
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='css/main2.css'>
-  <title>Cadastro de Usuário</title>
+  <title>Recuperação de senha</title>
   <script src="js/mascara.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
-</head>
-<header class="bg-black h-16 flex items-center justify-between pr-10 pl-10 p-2 sticky top-0">
-  <div>
-    <h1 class="text-white font-medium text-2xl border-r border-white pr-2">BoxUP</h1>
-  </div>
-  <div>
-    <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots"
-      class="inline-flex items-center p-2 text-sm font-medium text-center text-white bg-black rounded-lg" type="button">
-      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-        <path
-          d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-      </svg>
-    </button>
 
-    <!-- Dropdown menu -->
-    <div id="dropdownDots"
-      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-        <li>
-          <a href="home.html"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
-        </li>
-        <li>
-          <a href="loginmotorisa"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
-        </li>
-        <li>
-          <a href="loginUsuario"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
-        </li>
-      </ul>
-      <div class="py-2">
-        <a href="#"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
-          Conta</a>
-      </div>
-    </div>
-  </div>
-</header>
+</head>
 
 <body>
+  <header class="bg-black h-16 flex items-center justify-between pr-10 pl-10 p-2 sticky top-0">
+    <div>
+      <h1 class="text-white font-medium text-2xl border-r border-white pr-2">BoxUP</h1>
+    </div>
+    <div>
+      <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots"
+        class="inline-flex items-center p-2 text-sm font-medium text-center text-white bg-black rounded-lg"
+        type="button">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+          viewBox="0 0 4 15">
+          <path
+            d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+        </svg>
+      </button>
+
+      <!-- Dropdown menu -->
+      <div id="dropdownDots"
+        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+          <li>
+            <a href="home.html"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
+          </li>
+          <li>
+            <a href="loginmotorisa"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
+          </li>
+          <li>
+            <a href="loginUsuario"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
+          </li>
+        </ul>
+        <div class="py-2">
+          <a href="#"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
+            Conta</a>
+        </div>
+      </div>
+    </div>
+  </header>
   <div id="gridprincipal">
     <div class="flex justify-center items-center">
       <div class="lg:w-1/2">
-        <div class="flex flex-col justify-center px-6 w-full py-12 lg:px-8 bg-zinc-100 rounded-lg">
-          <div
-            class="sm:mx-auto sm:w-full sm:max-w-sm flex flex-row flex-wrap justify-center bg-neutral-800 rounded-md">
-            <a href="loginmotorisa.php" class="basis-1/2">
-              <h2
-                class="text-center p-3 text-1xl font-semibold leading-9 tracking-tight text-white bg-neutral-800 rounded-md hover:bg-neutral-600 hover:cursor-pointer">
-                Login</h2>
-            </a>
-            <a href="cadastromotorista.php" class="basis-1/2">
-              <h3
-                class="text-center p-3 text-1xl font-semibold leading-9 tracking-tight text-white bg-neutral-800 rounded-md hover:bg-neutral-600 hover:cursor-pointer">
-                Cadastrar</h3>
-            </a>
+        <div class="flex flex-col justify-center px-6 py-12 lg:px-8 bg-zinc-100 rounded-lg">
+          <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+            <h2 class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Recuperação de Senha
+            </h2>
           </div>
-
           <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form class="space-y-6" action="#" method="POST">
-              <div class="grid grid-cols-6 gap-4">
-
-
-                <div class="col-span-2 flex justify-end flex-col">
-                  <label for="nome" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
-                  <div class="mt-2">
-                    <input id="nome" name="nome" type="text" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-
-                <div class="col-span-2 flex justify-end flex-col">
-                  <label for="sobrenome"
-                    class="block text-sm font-medium leading-6 text-gray-900 break-words">Sobrenome</label>
-                  <div class="mt-2">
-                    <input id="sobrenome" name="sobrenome" type="text" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1  p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="col-span-2 flex justify-end flex-col">
-                  <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Usuario</label>
-                  <div class="mt-2">
-                    <input id="username" name="username" type="text" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-                <div class="col-span-2 flex justify-center flex-col">
-                  <label for="rg" class="block text-sm font-medium leading-6 text-gray-900">RG</label>
-                  <div class="mt-2">
-                    <input id="rg" name="rg" type="text" oninput=rge() maxlength="13" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="col-span-4 flex justify-end flex-col">
-                  <label for="email" class="block text-sm font-medium leading-6 text-gray-900">E-mail</label>
-                  <div class="mt-2">
-                    <input id="email" name="email" type="email" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="col-span-3 flex justify-end flex-col">
-                  <div class="flex items-center justify-between flex-wrap">
-                    <label for="password" class="block text-sm font-medium leading-6 text-gray-900 pr-1">Senha</label>
-                  </div>
-                  <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-
-                <div class="col-span-3 flex justify-end flex-col">
-                  <div class="flex items-center justify-between flex-wrap">
-                    <label for="password" class="block text-sm font-medium leading-6 text-gray-900 pr-1">Confirme a
-                      Senha</label>
-                  </div>
-                  <div class="mt-2">
-                    <input id="password" name="password2" type="password" autocomplete="current-password" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-                <div class="col-span-6 flex justify-end flex-col">
-                  <label for="cpf" class="block text-sm font-medium leading-6 text-gray-900">CPF</label>
-                  <div class="mt-2">
-                    <input id="cpf" name="cpf" type="text" oninput=cpfe() maxlength="14" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
+              <div>
+                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email</label>
+                <div class="mt-2">
+                  <input id="email" name="email" type="email" autocomplete="email" required
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
               </div>
-
               <div>
-                <button type="submit" name="enviar"
-                  class="flex w-full justify-center rounded-md bg-neutral-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-neutral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Entrar</button>
+                <button type="submit" name="ok"
+                  class="flex w-full justify-center rounded-md bg-neutral-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-neutral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Enviar
+                  Código</button>
               </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col p-0" id="imgesquerdo">
       <img src="img/photo-1636953056323-9c09fdd74fa6.jpg">
     </div>
@@ -242,7 +212,7 @@ if (isset($_POST['enviar'])) {
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#/"
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#"
             class="hover:underline">BoxUP™</a>. All Rights Reserved.
         </span>
         <div class="flex mt-4 space-x-5 sm:justify-center sm:mt-0">

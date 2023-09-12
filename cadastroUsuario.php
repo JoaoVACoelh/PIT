@@ -7,20 +7,19 @@ if (isset($_POST['enviar'])) {
   $banco = new PDO("mysql:host=localhost;dbname=pit", "root", "");
   $usuario = $_POST['username'];
   $senha = $_POST['password'];
-  $CPF = $_POST['cpf'];
-  $RG = $_POST['rg'];
+  $cpf = $_POST['cpf'];
   $email = $_POST['email'];
   $nome = $_POST['nome'];
   $sobrenome = $_POST['sobrenome'];
   $confirma = $_POST['password2'];
 
   if ($senha == $confirma) {
-    $insert = $banco->prepare("INSERT INTO cadastromotorista(usuario,nome,sobrenome,senha,email,cpf,rg) VALUES(?,?,?,?,?,?,?)");
-    $insert->execute([$usuario, $nome, $sobrenome, $senha, $email, $CPF, $RG]);
-    header("Location: loginmotorisa.php");
+    $insert = $banco->prepare("INSERT INTO loginusuario(usuario,nome,sobrenome,senha,cpf,email) VALUES(?,?,?,?,?,?)");
+    $insert->execute([$usuario,$nome,$sobrenome, $senha, $cpf, $email]);
+    header("Location: loginUsuario.php");
     exit();
   } else if ($senha != $confirma) {
-    $erro = "FALHA NO CADASTRO!";
+    echo ("FALHA NO CADASTRO!");
   }
 }
 ?>
@@ -84,12 +83,12 @@ if (isset($_POST['enviar'])) {
         <div class="flex flex-col justify-center px-6 w-full py-12 lg:px-8 bg-zinc-100 rounded-lg">
           <div
             class="sm:mx-auto sm:w-full sm:max-w-sm flex flex-row flex-wrap justify-center bg-neutral-800 rounded-md">
-            <a href="loginmotorisa.php" class="basis-1/2">
+            <a href="loginUsuario.php" class="basis-1/2">
               <h2
                 class="text-center p-3 text-1xl font-semibold leading-9 tracking-tight text-white bg-neutral-800 rounded-md hover:bg-neutral-600 hover:cursor-pointer">
                 Login</h2>
             </a>
-            <a href="cadastromotorista.php" class="basis-1/2">
+            <a href="cadastroUsuario.php" class="basis-1/2">
               <h3
                 class="text-center p-3 text-1xl font-semibold leading-9 tracking-tight text-white bg-neutral-800 rounded-md hover:bg-neutral-600 hover:cursor-pointer">
                 Cadastrar</h3>
@@ -101,7 +100,7 @@ if (isset($_POST['enviar'])) {
               <div class="grid grid-cols-6 gap-4">
 
 
-                <div class="col-span-2 flex justify-end flex-col">
+                <div class="col-span-3 flex justify-end flex-col">
                   <label for="nome" class="block text-sm font-medium leading-6 text-gray-900">Nome</label>
                   <div class="mt-2">
                     <input id="nome" name="nome" type="text" required
@@ -110,7 +109,7 @@ if (isset($_POST['enviar'])) {
                 </div>
 
 
-                <div class="col-span-2 flex justify-end flex-col">
+                <div class="col-span-3 flex justify-end flex-col">
                   <label for="sobrenome"
                     class="block text-sm font-medium leading-6 text-gray-900 break-words">Sobrenome</label>
                   <div class="mt-2">
@@ -123,13 +122,6 @@ if (isset($_POST['enviar'])) {
                   <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Usuario</label>
                   <div class="mt-2">
                     <input id="username" name="username" type="text" required
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  </div>
-                </div>
-                <div class="col-span-2 flex justify-center flex-col">
-                  <label for="rg" class="block text-sm font-medium leading-6 text-gray-900">RG</label>
-                  <div class="mt-2">
-                    <input id="rg" name="rg" type="text" oninput=rge() maxlength="13" required
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 p-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                   </div>
                 </div>
@@ -242,7 +234,7 @@ if (isset($_POST['enviar'])) {
       </div>
       <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div class="sm:flex sm:items-center sm:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#/"
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="#"
             class="hover:underline">BoxUP™</a>. All Rights Reserved.
         </span>
         <div class="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
