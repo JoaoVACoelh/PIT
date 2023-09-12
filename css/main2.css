@@ -1,0 +1,42 @@
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+#gridprincipal {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    height: 100%;
+}
+
+#imgesquerdo img {
+    height: 100%;
+    object-fit: cover;
+}
+
+#select:hover {
+    background-color: rgb(15, 15, 15);
+    transition: .2s;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    background: rgb(10, 10, 10);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0);
+}
+
+#banner {
+    background-image: url("img/bannersup.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 90vh;
+}

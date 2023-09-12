@@ -1,0 +1,30 @@
+header {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    left: 0;
+}
+
+#home {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+
+header div p {
+    border-right: 1px solid;
+    padding-right: 10px;
+}
+
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
