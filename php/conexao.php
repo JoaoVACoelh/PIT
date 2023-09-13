@@ -1,5 +1,4 @@
 <?php
-
 $usuario = 'root';
 $senha = '';
 $database = 'pit';
@@ -9,7 +8,3 @@ $mysqli = new mysqli($host, $usuario, $senha, $database);
 if ($mysqli->error) {
     die("Falha" . $mysqli->error);
 }
-
-
-
-?>

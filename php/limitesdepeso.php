@@ -69,38 +69,34 @@ header('Content-Type: text/html; charset=utf-8');
     <main
         class="flex content-center items-center flex-col w-full h-fit bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat">
         <div id="term" class="text-2xl w-3/4 text-justify bg-black/75 p-5 text-white rounded-lg mt-5 mb-5">
-            <h1 class="font-bold">Nossas politicas de cancelamento e reembolso</h1>
-            <p class="p-5">A política a seguir descreve os termos e condições relacionados ao cancelamento de serviços e
-                reembolso oferecidos pelo BoxUP para mudanças residenciais: Cancelamento de Serviços</p>
+            <h1 class="font-bold">Política e limite de pesos</h1>
+            <p class="p-5">Bem-vindo ao nosso site de transporte de objetos. Antes de utilizar nossos serviços, pedimos
+                que você
+                leia atentamente e concorde com esta política. Ao utilizar nosso site, você está concordando com
+                a política estabelecida.</p>
             <p class="p-5">
-                <b>1.1 Cancelamento por parte do Cliente</b><br>
-                Caso o cliente deseje cancelar os serviços contratados, é necessário notificar o BoxUP com antecedência
-                mínima de X dias antes da data agendada para a mudança. O cancelamento deve ser feito por escrito, via
-                e-mail ou formulário de contato disponibilizado no site do BoxUP. O cliente pode estar sujeito a uma
-                taxa de cancelamento, dependendo do tempo restante até a data agendada para a mudança. Essa taxa será
-                informada no momento da contratação dos serviços.
-                </ul>
+                <b>Limites de dimensões e peso das encomendas:</b><br>
+            <ul class="list-none pt-5 pb-5">
+                <li class="p-5 pl-10 pt-0">- Dimensões máximas de 80 cm x 80 cm x 80 cm</li>
+                <li class="p-5 pl-10 pt-0">- O peso máximo permitido é de até 120 kg. Porém a Empresa pode cobrar taxas
+                    adicionais em pacotes com peso cúbico ou físico superior a 50Kg.</li>
+                <li class="p-5 pl-10 pt-0 pb-0">- A transportadora não exige dimensões nem peso mínimo.</li>
+            </ul>
             </p>
             <p class="p-5">
-                <b>1.2 Cancelamento por parte do BoxUP:</b><br>
-                O BoxUP reserva-se o direito de cancelar ou adiar os serviços contratados em casos excepcionais, como
-                condições climáticas extremas, situações de força maior ou circunstâncias imprevistas que impossibilitem
-                a realização da mudança. Em caso de cancelamento por parte do BoxUP, todas as taxas pagas pelo cliente
-                serão reembolsadas integralmente. Reembolso
-            </p>
-            <p class="p-5">
-                <b>2.2. Reembolso em caso de cancelamento por parte do BoxUP:</b><br>
-                Em caso de cancelamento por parte do BoxUP, o valor total pago pelo cliente será reembolsado
-                integralmente, sem quaisquer deduções. O reembolso será processado no prazo de X dias úteis após o
-                cancelamento ser confirmado e será feito pelo mesmo método de pagamento utilizado na contratação dos
-                serviços.
-            </p>
-            <p class="p-5">
-                <b>2.2 Reembolso em caso de cancelamento por parte do Cliente:</b><br>
-                Caso o cliente cancele os serviços contratados com antecedência mínima de X dias antes da data agendada
-                para a mudança, o BoxUP irá reembolsar o valor pago, deduzindo a taxa de cancelamento, se aplicável. O
-                reembolso será processado no prazo de X dias úteis após a confirmação do cancelamento e será feito pelo
-                mesmo método de pagamento utilizado na contratação dos serviços.
+                <b>Notas Fiscais</b><br>
+            <ul class="list-none pt-5 pb-5">
+                <li class="p-5 pl-10 pt-0">- Todas as encomendas precisam conter a nota fiscal NF 55 ou declaração de
+                    conteúdo.</li>
+                <li class="p-5 pl-10 pt-0">- O Valor Segurado deve ser igual à quantia informada na nota fiscal ou na
+                    declaração de conteúdo. Caso os valores sejam diferentes, a Empresa vai considerar o menor montante
+                    na hora de fazer o ressarcimento.</li>
+                <li class="p-5 pl-10 pt-0">- Envios realizados com declaração de conteúdo não são indenizados em casos
+                    de
+                    avaria e as indenizações por extravio têm teto máximo de R$ 1.000.</li>
+                <li class="p-5 pl-10 pt-0 pb-0">- Encomendas acompanhadas por nota fiscal recebem indenização integral
+                    (valor máximo de R$ 30.000), seguindo as políticas da transportadora Empresa. </li>
+            </ul>
             </p>
         </div>
     </main>
@@ -113,7 +109,7 @@ header('Content-Type: text/html; charset=utf-8');
                     </a>
                 </div>
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                <div>
+                    <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">

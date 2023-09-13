@@ -1,15 +1,48 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
+$resultado = "";
+$_SESSION['login_session'] = "";
+session_start();
+
+if (isset($_POST['enviar'])) {
+    try {
+        $conn = new PDO("mysql:host=localhost;dbname=pit", "root", "");
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo "Falha na CONEXAO" . $e->getMessage();
+        die();
+    }
+    $data = $_POST['date'];
+    $horario = $_POST['time'];
+    $endereco = $_POST['ENDERECO'];
+    $cidade = $_POST['CIDADE'];
+    $estado = $_POST['ESTADO'];
+    $fk_cpf = $_SESSION['cpf_session'];
+
+    $insert = $conn->prepare("INSERT INTO agendamento(cpf_fk,dia,cidade,estado,horario,endereco) VALUES(?,?,?,?,?,?)");
+    $insert->execute([$fk_cpf, $data, $cidade, $estado, $horario, $endereco]);
+    try {
+        if ($insert->rowCount() > 0) {
+            header('Location: ../php/home.php');
+            exit();
+        } else {
+            throw new Exception('ERRO NO AGENDAMENTO', '1');
+        }
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
-    <title>Limites de Peso</title>
+    <title>Login de Usuário</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
 </head>
@@ -35,7 +68,7 @@ header('Content-Type: text/html; charset=utf-8');
                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                     <li>
-                    <a href="../php/home.php"
+                        <a href="../php/home.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
                     </li>
                     <li>
@@ -50,15 +83,13 @@ header('Content-Type: text/html; charset=utf-8');
                 <div class="py-2">
                     <a href="../php/loginUsuario.php"
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><label>
-                            <?php session_start();
-                            if(isset($_SESSION['login_session']))
-                            {
+                            <?php
+                            session_start();
+                            if (isset($_SESSION['login_session'])) {
                                 echo $_SESSION['login_session'];
-                            }
-                            else
-                            {
+                            } else {
                                 echo ("FAÇA LOGIN");
-                            } 
+                            }
                             ?>
                         </label>
                     </a>
@@ -66,44 +97,78 @@ header('Content-Type: text/html; charset=utf-8');
             </div>
         </div>
     </header>
-    <main
-        class="flex content-center items-center flex-col w-full h-fit bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat">
-        <div id="term" class="text-2xl w-3/4 text-justify bg-black/75 p-5 text-white rounded-lg mt-5 mb-5">
-            <h1 class="font-bold">Nossas politicas de cancelamento e reembolso</h1>
-            <p class="p-5">A política a seguir descreve os termos e condições relacionados ao cancelamento de serviços e
-                reembolso oferecidos pelo BoxUP para mudanças residenciais: Cancelamento de Serviços</p>
-            <p class="p-5">
-                <b>1.1 Cancelamento por parte do Cliente</b><br>
-                Caso o cliente deseje cancelar os serviços contratados, é necessário notificar o BoxUP com antecedência
-                mínima de X dias antes da data agendada para a mudança. O cancelamento deve ser feito por escrito, via
-                e-mail ou formulário de contato disponibilizado no site do BoxUP. O cliente pode estar sujeito a uma
-                taxa de cancelamento, dependendo do tempo restante até a data agendada para a mudança. Essa taxa será
-                informada no momento da contratação dos serviços.
-                </ul>
-            </p>
-            <p class="p-5">
-                <b>1.2 Cancelamento por parte do BoxUP:</b><br>
-                O BoxUP reserva-se o direito de cancelar ou adiar os serviços contratados em casos excepcionais, como
-                condições climáticas extremas, situações de força maior ou circunstâncias imprevistas que impossibilitem
-                a realização da mudança. Em caso de cancelamento por parte do BoxUP, todas as taxas pagas pelo cliente
-                serão reembolsadas integralmente. Reembolso
-            </p>
-            <p class="p-5">
-                <b>2.2. Reembolso em caso de cancelamento por parte do BoxUP:</b><br>
-                Em caso de cancelamento por parte do BoxUP, o valor total pago pelo cliente será reembolsado
-                integralmente, sem quaisquer deduções. O reembolso será processado no prazo de X dias úteis após o
-                cancelamento ser confirmado e será feito pelo mesmo método de pagamento utilizado na contratação dos
-                serviços.
-            </p>
-            <p class="p-5">
-                <b>2.2 Reembolso em caso de cancelamento por parte do Cliente:</b><br>
-                Caso o cliente cancele os serviços contratados com antecedência mínima de X dias antes da data agendada
-                para a mudança, o BoxUP irá reembolsar o valor pago, deduzindo a taxa de cancelamento, se aplicável. O
-                reembolso será processado no prazo de X dias úteis após a confirmação do cancelamento e será feito pelo
-                mesmo método de pagamento utilizado na contratação dos serviços.
-            </p>
+    <div id="gridprincipal">
+        <div class="flex justify-center items-center">
+            <div class="lg:w-1/2">
+                <div class="flex flex-col justify-center px-6 py-12 lg:px-8 bg-zinc-100 rounded-lg">
+                    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+                        <h2 class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+                            AGENDAMENTO DE MUDANÇAS
+                        </h2>
+                    </div>
+                    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                        <form class="space-y-6" action="#" method="POST">
+                            <div>
+                                <label for="date"
+                                    class="block text-sm font-medium leading-6 text-gray-900">DATA:</label>
+                                <div class="mt-2">
+                                    <input id="date" name="date" type="date" autocomplete="date" required
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="time"
+                                    class="block text-sm font-medium leading-6 text-gray-900">HORARIO:</label>
+                                <div class="mt-2">
+                                    <input id="time" name="time" type="time" autocomplete="time" required
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="ESTADO"
+                                    class="block text-sm font-medium leading-6 text-gray-900">ESTADO:</label>
+                                <div class="mt-2">
+                                    <input id="ESTADO" name="ESTADO" type="text" autocomplete="ESTADO" required
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="CIDADE"
+                                    class="block text-sm font-medium leading-6 text-gray-900">CIDADE:</label>
+                                <div class="mt-2">
+                                    <input id="CIDADE" name="CIDADE" type="text" autocomplete="CIDADE" required
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="ENDERECO"
+                                    class="block text-sm font-medium leading-6 text-gray-900">ENDEREÇO:</label>
+                                <div class="mt-2">
+                                    <input id="ENDERECO" name="ENDERECO" type="text" autocomplete="ENDERECO" required
+                                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                </div>
+                            </div>
+                            <div>
+                                <p>
+                                    <?php if (isset($_POST['enviar'])) {
+                                        echo $e->getMessage();
+                                    }
+                                    ?>
+                                </p>
+                                <button type="submit" name="enviar"
+                                    class="flex w-full justify-center rounded-md bg-neutral-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-neutral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">AGENDAR
+                                    MUDANÇA
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
+        <div class="col p-0" id="imgesquerdo">
+            <img src="../img/photo-1636953056323-9c09fdd74fa6.jpg">
+        </div>
+    </div>
     <footer class="bg-black">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
@@ -113,7 +178,7 @@ header('Content-Type: text/html; charset=utf-8');
                     </a>
                 </div>
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                <div>
+                    <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
@@ -214,8 +279,8 @@ header('Content-Type: text/html; charset=utf-8');
             </div>
         </div>
     </footer>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-</body>
 </body>
 
 </html>

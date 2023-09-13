@@ -2,16 +2,18 @@
 header('Content-Type: text/html; charset=utf-8');
 ?>
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Suporte</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
-    <title>Limites de Peso</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -66,43 +68,85 @@ header('Content-Type: text/html; charset=utf-8');
             </div>
         </div>
     </header>
+
     <main
         class="flex content-center items-center flex-col w-full h-fit bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat">
         <div id="term" class="text-2xl w-3/4 text-justify bg-black/75 p-5 text-white rounded-lg mt-5 mb-5">
-            <h1 class="font-bold">Nossas politicas de cancelamento e reembolso</h1>
-            <p class="p-5">A política a seguir descreve os termos e condições relacionados ao cancelamento de serviços e
-                reembolso oferecidos pelo BoxUP para mudanças residenciais: Cancelamento de Serviços</p>
+            <h1 class="font-bold">Termos de Uso do Site de Transporte de Objetos</h1>
+            <p class="p-5">Bem-vindo ao nosso site de transporte de objetos. Antes de utilizar nossos serviços, pedimos
+                que você
+                leia atentamente e concorde com estes Termos de Uso. Ao utilizar nosso site, você está concordando com
+                todos os termos e condições aqui estabelecidos.</p>
             <p class="p-5">
-                <b>1.1 Cancelamento por parte do Cliente</b><br>
-                Caso o cliente deseje cancelar os serviços contratados, é necessário notificar o BoxUP com antecedência
-                mínima de X dias antes da data agendada para a mudança. O cancelamento deve ser feito por escrito, via
-                e-mail ou formulário de contato disponibilizado no site do BoxUP. O cliente pode estar sujeito a uma
-                taxa de cancelamento, dependendo do tempo restante até a data agendada para a mudança. Essa taxa será
-                informada no momento da contratação dos serviços.
-                </ul>
+                <b>1- Aceitação dos Termos</b><br>
+                Ao utilizar nosso site, você concorda integralmente com estes Termos de Uso. Se você não concorda com
+                algum destes termos, por favor, não utilize nossos serviços.
             </p>
             <p class="p-5">
-                <b>1.2 Cancelamento por parte do BoxUP:</b><br>
-                O BoxUP reserva-se o direito de cancelar ou adiar os serviços contratados em casos excepcionais, como
-                condições climáticas extremas, situações de força maior ou circunstâncias imprevistas que impossibilitem
-                a realização da mudança. Em caso de cancelamento por parte do BoxUP, todas as taxas pagas pelo cliente
-                serão reembolsadas integralmente. Reembolso
+                <b>2- Descrição dos Serviços</b><br>
+                Nosso site de transporte de objetos oferece uma plataforma online para conectar remetentes e
+                transportadoras. Os usuários podem enviar solicitações de transporte de objetos e receber cotações de
+                transportadoras parceiras. No entanto, não somos uma transportadora e não nos responsabilizamos pelos
+                serviços de transporte em si.
             </p>
             <p class="p-5">
-                <b>2.2. Reembolso em caso de cancelamento por parte do BoxUP:</b><br>
-                Em caso de cancelamento por parte do BoxUP, o valor total pago pelo cliente será reembolsado
-                integralmente, sem quaisquer deduções. O reembolso será processado no prazo de X dias úteis após o
-                cancelamento ser confirmado e será feito pelo mesmo método de pagamento utilizado na contratação dos
-                serviços.
+                <b>3- Registro e Conta de Usuário</b><br>
+                Para utilizar nossos serviços, você precisa se registrar e criar uma conta de usuário. Você é
+                responsável por fornecer informações precisas e atualizadas durante o processo de registro. Você também
+                é responsável por manter a segurança de sua conta e senha, e por todas as atividades que ocorrerem sob
+                sua conta.
             </p>
             <p class="p-5">
-                <b>2.2 Reembolso em caso de cancelamento por parte do Cliente:</b><br>
-                Caso o cliente cancele os serviços contratados com antecedência mínima de X dias antes da data agendada
-                para a mudança, o BoxUP irá reembolsar o valor pago, deduzindo a taxa de cancelamento, se aplicável. O
-                reembolso será processado no prazo de X dias úteis após a confirmação do cancelamento e será feito pelo
-                mesmo método de pagamento utilizado na contratação dos serviços.
+                <b>4- Responsabilidades do Usuário</b><br>
+                Ao utilizar nosso site, você concorda em:
+            </p>
+            <ul class="list-none pt-5 pb-5">
+                <li class="p-5 pl-10 pt-0">
+                    4.1- Fornecer informações precisas e atualizadas sobre os objetos a serem transportados;
+                </li>
+                <li class="p-5 pl-10 pt-0">
+                    4.2- Respeitar as leis aplicáveis ao transporte de objetos;
+                </li>
+                <li class="p-5 pl-10 pt-0">
+                    4.3- Não utilizar nosso site para atividades ilegais, fraudulentas ou que violem os direitos de
+                    terceiros;
+                </li>
+                <li class="p-5 pl-10 pt-0">
+                    4.4- Não enviar conteúdo ofensivo, difamatório, obsceno ou prejudicial;
+                </li>
+                <li class="p-5 pl-10 pt-0 pb-0">
+                    4.5- Respeitar os direitos de propriedade intelectual relacionados ao nosso site.
+                </li>
+            </ul>
+            <p class="p-5">
+                <b>5- Cotações e Contratação</b><br>
+                Nosso site oferece um sistema de cotações para ajudar os usuários a obterem preços e prazos de
+                transporte. No entanto, as cotações fornecidas são apenas estimativas e podem variar com base em fatores
+                como distância, peso, tamanho e outros detalhes relacionados ao transporte. A contratação do serviço de
+                transporte é realizada diretamente entre o remetente e a transportadora selecionada.
+            </p>
+            <p class="p-5">
+                <b> 6- Responsabilidade Limitada</b><br>
+                Embora nos esforcemos para fornecer um serviço confiável, não podemos garantir a precisão, pontualidade
+                ou qualidade dos serviços prestados pelas transportadoras parceiras. Não nos responsabilizamos por
+                quaisquer danos diretos, indiretos, incidentais, consequenciais ou especiais resultantes do uso ou
+                incapacidade de uso do nosso site ou dos serviços de transporte contratados.
+            </p>
+            <p class="p-5">
+                <b> 7- Modificações dos Termos de Uso</b><br>
+                Podemos atualizar ou modificar estes Termos de Uso periodicamente. Recomendamos que você verifique esta
+                página regularmente para estar ciente de quaisquer alterações. O uso continuado do nosso site após a
+                publicação de quaisquer modificações significa sua aceitação dos novos termos.
+            </p>
+            <p class="p-5">
+                <b> 8- Encerramento de Conta</b><br>
+                Reservamo-nos o direito de encerrar ou suspender sua conta de usuário a qualquer momento, sem aviso
+                prévio, se violar estes Termos de Uso ou se houver suspeita de atividade fraudulenta ou prejudicial.
+                <br>
+                Lei Aplicável e Jurisdição
             </p>
         </div>
+
     </main>
     <footer class="bg-black">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -113,7 +157,7 @@ header('Content-Type: text/html; charset=utf-8');
                     </a>
                 </div>
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                <div>
+                    <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
@@ -215,7 +259,6 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-</body>
 </body>
 
 </html>

@@ -1,20 +1,64 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
+session_start();
+
+try {
+    $conn = new PDO("mysql:host=localhost;dbname=pit", "root", "");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Falha na CONEXAO" . $e->getMessage();
+    die();
+}
+
+if (isset($_POST['enviar'])) {
+    $cpf = $_SESSION['cpf_session'];
+    $sql = "SELECT * FROM loginusuario WHERE cpf = '$cpf'";
+    $result = $conn->query($sql);
+    if ($result->rowCount() > 0) {
+        header("Location: ../php/agendar.php");
+    } else {
+        header("Location: ../php/loginUsuario.php");
+    }
+}
+
+if (isset($_POST['conta'])) {
+    $cpf = $_SESSION['cpf_session'];
+    $sql = "SELECT * FROM loginusuario WHERE cpf = '$cpf'";
+    $result = $conn->query($sql);
+    if ($result->rowCount() > 0) {
+        header("Location: ../php/contausuario.php");
+    } else {
+        header("Location: ../php/loginUsuario.php");
+    }
+}
+
+if (isset($_POST['motorista'])) {
+    $rg = $_SESSION['rg_session'];
+    $sql = "SELECT * FROM cadastromotorista WHERE rg = '$rg'";
+    $result = $conn->query($sql);
+    if ($result->rowCount() > 0) {
+        header("Location: ../php/contamotorista.php");
+    } else {
+        header("Location: ../php/loginmotorisa.php");
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>BoxUP</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
-    <title>Limites de Peso</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="overflow-x-hidden">
     <header class="bg-black h-16 flex items-center justify-between pr-10 pl-10 p-2 sticky top-0">
         <div>
             <h1 class="text-white font-medium text-2xl border-r border-white pr-2">BoxUP</h1>
@@ -30,17 +74,14 @@ header('Content-Type: text/html; charset=utf-8');
                 </svg>
             </button>
 
+
             <!-- Dropdown menu -->
             <div id="dropdownDots"
                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                     <li>
-                    <a href="../php/home.php"
+                        <a href="../php/home.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
-                    </li>
-                    <li>
-                        <a href="../php/loginmotorisa.php"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
                     </li>
                     <li>
                         <a href="../php/logout.php"
@@ -48,61 +89,147 @@ header('Content-Type: text/html; charset=utf-8');
                     </li>
                 </ul>
                 <div class="py-2">
-                    <a href="../php/loginUsuario.php"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><label>
-                            <?php session_start();
-                            if(isset($_SESSION['login_session']))
-                            {
+                    <form method="POST" action="#">
+                        <button type="submit" name="conta"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            <?php
+                            if (isset($_SESSION['login_session'])) {
                                 echo $_SESSION['login_session'];
-                            }
-                            else
-                            {
+                            } else {
                                 echo ("FAÇA LOGIN");
-                            } 
+                            }
                             ?>
-                        </label>
-                    </a>
+                        </button>
+                        <button type="submit" name="motorista"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                            <?php
+                            if (isset($_SESSION['login2_session'])) {
+                                echo $_SESSION['login2_session'];
+                            } else {
+                                echo ("LOGIN DE MOTORISTA");
+                            }
+                            ?>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </header>
-    <main
-        class="flex content-center items-center flex-col w-full h-fit bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat">
-        <div id="term" class="text-2xl w-3/4 text-justify bg-black/75 p-5 text-white rounded-lg mt-5 mb-5">
-            <h1 class="font-bold">Nossas politicas de cancelamento e reembolso</h1>
-            <p class="p-5">A política a seguir descreve os termos e condições relacionados ao cancelamento de serviços e
-                reembolso oferecidos pelo BoxUP para mudanças residenciais: Cancelamento de Serviços</p>
-            <p class="p-5">
-                <b>1.1 Cancelamento por parte do Cliente</b><br>
-                Caso o cliente deseje cancelar os serviços contratados, é necessário notificar o BoxUP com antecedência
-                mínima de X dias antes da data agendada para a mudança. O cancelamento deve ser feito por escrito, via
-                e-mail ou formulário de contato disponibilizado no site do BoxUP. O cliente pode estar sujeito a uma
-                taxa de cancelamento, dependendo do tempo restante até a data agendada para a mudança. Essa taxa será
-                informada no momento da contratação dos serviços.
-                </ul>
-            </p>
-            <p class="p-5">
-                <b>1.2 Cancelamento por parte do BoxUP:</b><br>
-                O BoxUP reserva-se o direito de cancelar ou adiar os serviços contratados em casos excepcionais, como
-                condições climáticas extremas, situações de força maior ou circunstâncias imprevistas que impossibilitem
-                a realização da mudança. Em caso de cancelamento por parte do BoxUP, todas as taxas pagas pelo cliente
-                serão reembolsadas integralmente. Reembolso
-            </p>
-            <p class="p-5">
-                <b>2.2. Reembolso em caso de cancelamento por parte do BoxUP:</b><br>
-                Em caso de cancelamento por parte do BoxUP, o valor total pago pelo cliente será reembolsado
-                integralmente, sem quaisquer deduções. O reembolso será processado no prazo de X dias úteis após o
-                cancelamento ser confirmado e será feito pelo mesmo método de pagamento utilizado na contratação dos
-                serviços.
-            </p>
-            <p class="p-5">
-                <b>2.2 Reembolso em caso de cancelamento por parte do Cliente:</b><br>
-                Caso o cliente cancele os serviços contratados com antecedência mínima de X dias antes da data agendada
-                para a mudança, o BoxUP irá reembolsar o valor pago, deduzindo a taxa de cancelamento, se aplicável. O
-                reembolso será processado no prazo de X dias úteis após a confirmação do cancelamento e será feito pelo
-                mesmo método de pagamento utilizado na contratação dos serviços.
-            </p>
+    <main class="w-screen">
+        <div class="flex justify-center flex-col w-full h-96 bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat">
+            <div class="flex justify-center items-left flex-col w-3/4 h-1/2 self-center text-4xl font-medium">
+                <h1>Olá, Somos a BoxUP.</h1>
+                <form action="#" method="POST">
+                    <button type="submit" name="enviar" class="text-3xl/10 font-normal text-left">Planeje conosco sua
+                        mudança</p>
+                </form>
+            </div>
         </div>
+        <section class="flex items-left justify-center content-center ">
+            <div class="w-3/4 text-left flex justify-center items-left flex-col border-b border-gray-700 p-5">
+                <h1 class="font-bold text-3xl/9 w-full 2xl:w-2/4 pb-5">O que Somos? Mudanças Residenciais Simples e
+                    Confiáveis</h1>
+                <p class="text-base/7 w-full 2xl:w-2/4">Mude para uma nova vida com BoxUP! Você está planejando uma
+                    mudança
+                    residencial? Deixe que a
+                    BoxUP
+                    facilite todo o processo para você. Com nossa equipe de profissionais experientes e serviço de
+                    qualidade, garantimos uma mudança tranquila e sem preocupações. Deixe-nos cuidar de todos os
+                    detalhes
+                    para que você possa desfrutar do seu novo lar.</p>
+            </div>
+        </section>
+        <section class="flex flex-col items-center">
+            <div class="flex items-center flex-col mt-10">
+                <p class="font-bold text-3xl/9 w-3/4 pb-7 text-center">Por que escolher a BoxUP?</p>
+
+                <div class="flex flex-wrap justify-center gap-20">
+                    <div class="w-80 text-justify border grid grid-rows-2 items-center rounded-md overflow-hidden">
+                        <img class="object-cover h-full" src="../img/Postura-profissional-4.jpg">
+                        <div class="flex content-center h-full flex-col p-5">
+                            <h1 class="p-1 font-bold">Profissionalismo</h1>
+                            <p>
+                                Nossa equipe é formada por especialistas em mudanças
+                                residenciais, treinados para
+                                lidar com todos os tipos de situações e cuidar dos seus pertences com o maior cuidado.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-80 text-justify border grid grid-rows-2 items-center rounded-md overflow-hidden">
+                        <img class="object-cover h-full "
+                            src="../img/post_thumbnail-72c155d011dd16da41b23a9072c516d8.jpeg">
+                        <div class="flex content-center h-full flex-col p-5">
+                            <h1 class="p-1 font-bold">Serviço Personalizado</h1>
+                            <p>
+                                Entendemos que cada cliente é único, por isso
+                                oferecemos um serviço
+                                personalizado de acordo com suas necessidades e preferências. Adaptamos nossos planos e
+                                horários
+                                para se adequar ao seu cronograma.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-80 text-justify border grid grid-rows-2 items-center rounded-md overflow-hidden">
+                        <img class="object-cover h-full"
+                            src="../img/homem-trabalhando-com-equipamento-de-seguranca.jpg">
+                        <div class="flex content-center h-full flex-col p-5">
+                            <h1 class="p-1 font-bold">Segurança e Proteção</h1>
+                            <p>
+                                Sabemos o quanto seus pertences são valiosos para você.
+                                Utilizamos materiais
+                                de embalagem de alta qualidade e técnicas de transporte seguras para garantir que seus
+                                itens
+                                sejam
+                                protegidos durante todo o processo de mudança.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="w-80 text-justify border grid grid-rows-2 items-center rounded-md overflow-hidden">
+                        <img class="object-cover h-full"
+                            src="../img/trabalhador-de-entrega-bem-sucedido-que-mostra-o-polegar-para-cima.jpg">
+                        <div class="flex content-center h-full flex-col p-5">
+                            <h1 class="p-1 font-bold">Pontualidade</h1>
+                            <p>
+                                Valorizamos seu tempo e nos esforçamos para cumprir todos
+                                os prazos acordados. Nosso
+                                objetivo é entregar seus pertences no local de destino no horário planejado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-screen flex flex-col flex-wrap mb-10 mt-10 border-t border-gray-700">
+                <p class="p-5 text-2xl">Nossos Serviços</p>
+
+                <div class="flex flex-wrap flex-row justify-center gap-12 ">
+                    <div class="grid grid-rows-2 gap-y-4 w-80">
+                        <h1 class="flex items-center text-2xl font-semibold">Embalagem e Desembalagem Profissional</h1>
+                        <p class="text-justify">
+                            Nossa equipe cuidará da embalagem dos seus pertences,utilizando materiais
+                            adequados para garantir a segurança durante o transporte. Além disso,também
+                            oferecemos o serviço de desembalagem no local de destino, para que você possa se
+                            instalarrapidamente.
+                        </p>
+                    </div>
+                    <div class="grid grid-rows-2 gap-y-4 w-80">
+                        <h1 class="flex items-center text-2xl font-semibold">Transporte Seguro</h1>
+                        <p class="text-justify">
+                            Contamos com uma frota de veículos modernos e equipados para realizar o
+                            transporte dos seus pertences com segurança. Nossa equipe cuidará de todos os detalhes
+                            logísticos para garantir uma entrega tranquila.
+                        </p>
+                    </div>
+                    <div class="grid grid-rows-2 gap-y-4 w-80">
+                        <h1 class="flex items-center text-2xl font-semibold">Montagem e Desmontagem de Móveis</h1>
+                        <p class="text-justify">
+                            Caso seja necessário desmontar e montar seus móveis durante a
+                            mudança, nossa equipe cuidará desse processo para você, garantindo que tudo fique no lugar
+                            correto.
+                        </p>
+                    </div>
+                </div>
+        </section>
     </main>
     <footer class="bg-black">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -113,7 +240,7 @@ header('Content-Type: text/html; charset=utf-8');
                     </a>
                 </div>
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                <div>
+                    <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
@@ -215,7 +342,6 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-</body>
 </body>
 
 </html>

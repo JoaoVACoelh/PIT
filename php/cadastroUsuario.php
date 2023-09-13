@@ -1,10 +1,18 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-include('conexao.php');
 $erro = "";
 
 if (isset($_POST['enviar'])) {
-  $banco = new PDO("mysql:host=localhost;dbname=pit", "root", "");
+  try
+  {
+      $conn = new PDO("mysql:host=localhost;dbname=pit","root","");
+      $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+  }
+  catch(PDOException $e)
+  {
+      echo "Falha na CONEXAO".$e->getMessage();
+      die();
+  }
   $usuario = $_POST['username'];
   $senha = $_POST['password'];
   $cpf = $_POST['cpf'];
@@ -14,9 +22,9 @@ if (isset($_POST['enviar'])) {
   $confirma = $_POST['password2'];
 
   if ($senha == $confirma) {
-    $insert = $banco->prepare("INSERT INTO loginusuario(usuario,nome,sobrenome,senha,cpf,email) VALUES(?,?,?,?,?,?)");
+    $insert = $conn->prepare("INSERT INTO loginusuario(usuario,nome,sobrenome,senha,cpf,email) VALUES(?,?,?,?,?,?)");
     $insert->execute([$usuario, $nome, $sobrenome, $senha, $cpf, $email]);
-    header("Location: loginUsuario.php");
+    header("Location: ../php/loginUsuario.php");
     exit();
   } else if ($senha != $confirma) {
     echo ("FALHA NO CADASTRO!");
@@ -33,7 +41,7 @@ if (isset($_POST['enviar'])) {
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
   <title>Cadastro de Usuário</title>
-  <script src="js/mascara.js"></script>
+  <script src="../js/mascara.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
 </head>
@@ -52,27 +60,17 @@ if (isset($_POST['enviar'])) {
 
     <!-- Dropdown menu -->
     <div id="dropdownDots"
-      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-        <li>
-          <a href="../html/home.html"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
-        </li>
-        <li>
-          <a href="../php/loginmotorisa.php"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
-        </li>
-        <li>
-          <a href="../php/loginUsuario.php"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
-        </li>
-      </ul>
-      <div class="py-2">
-        <a href="#"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
-          Conta</a>
-      </div>
-    </div>
+                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                    <li>
+                    <a href="../php/home.php"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
+                    </li>
+                    <li>
+                        <a href="../php/loginmotorisa.php"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
+                    </li>
+            </div>
   </div>
 </header>
 
@@ -173,7 +171,7 @@ if (isset($_POST['enviar'])) {
       </div>
     </div>
     <div class="col p-0" id="imgesquerdo">
-      <img src="img/photo-1636953056323-9c09fdd74fa6.jpg">
+      <img src="../img/photo-1636953056323-9c09fdd74fa6.jpg">
     </div>
   </div>
   <footer class="bg-black">
@@ -189,16 +187,16 @@ if (isset($_POST['enviar'])) {
             <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
             <ul class="text-gray-500 dark:text-gray-400 font-medium">
               <li class="mb-4">
-                <a href="../html/termo.html" class="hover:underline">Termo de Uso</a>
+                <a href="../php/termo.php" class="hover:underline">Termo de Uso</a>
               </li>
               <li class="mb-4">
-                <a href="../html/limitesdepeso.html" class="hover:underline">Política de Peso</a>
+                <a href="../php/limitesdepeso.php" class="hover:underline">Política de Peso</a>
               </li>
               <li class="mb-4">
                 <a href="../php/politica.php" class="hover:underline">Política de Reembolso</a>
               </li>
               <li class="mb-4">
-                <a href="../html/suporte.html" class="hover:underline">Suporte</a>
+                <a href="../php/suporte.php" class="hover:underline">Suporte</a>
               </li>
             </ul>
           </div>
@@ -212,7 +210,7 @@ if (isset($_POST['enviar'])) {
                 <a href="../php/RecrutamentoMotorista.php" class="hover:underline">Carreiras</a>
               </li>
               <li class="mb-4">
-                <a href="../html/suporte.html" class="hover:underline">Contato</a>
+                <a href="../php/suporte.php" class="hover:underline">Contato</a>
               </li>
             </ul>
           </div>

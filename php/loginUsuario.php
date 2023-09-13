@@ -1,23 +1,50 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-include('conexao.php');
 $resultado = "";
+$_SESSION['login_session'] = "";
+
 
 if (isset($_POST['enviar'])) {
-    $banco = new PDO("mysql:host=localhost;dbname=pit", "root", "");
+    try
+    {
+        $conn = new PDO("mysql:host=localhost;dbname=pit","root","");
+        $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    }
+    catch(PDOException $e)
+    {
+        echo "Falha na CONEXAO".$e->getMessage();
+        die();
+    }
     $nome = $_POST['nome'];
     $senha = $_POST['senha'];
     $sql = "SELECT * FROM loginusuario WHERE usuario = '$nome' AND senha = '$senha'";
-    $result = $banco->query($sql);
+    $sql2 = "SELECT cpf from loginusuario WHERE usuario = '$nome' AND senha = '$senha'";
+    $result = $conn->query($sql);
+    $select = $conn->query($sql2);
 
+    try
+    {
     if ($result->rowCount() > 0) {
-        header("Location: home.html");
+        if (!$select) {
+            die("Erro na consulta: " . $conn->errorInfo()[2]);
+        }
+        if ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+            $row['cpf'];
+        }   
+        session_start();
+        $_SESSION['login_session'] = $nome;
+        $_SESSION['cpf_session'] = $row['cpf'];
+        session_id();
+        header("Location: ../php/home.php");
         exit();
     } else {
-        $resultado = "FALHA NO LOGIN";
-        echo ($resultado);
+        throw new Exception('ERRO NO LOGIN','1');
     }
-
+    }
+    catch (Exception $e)
+    {
+        $e->getMessage();
+    }
 }
 ?>
 
@@ -55,23 +82,13 @@ if (isset($_POST['enviar'])) {
                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
                     <li>
-                        <a href="../html/home.html"
+                        <a href="../php/home.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
                     </li>
                     <li>
                         <a href="../php/loginmotorisa.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
                     </li>
-                    <li>
-                        <a href="../php/loginUsuario.php"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
-                    </li>
-                </ul>
-                <div class="py-2">
-                    <a href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
-                        Conta</a>
-                </div>
             </div>
         </div>
     </header>
@@ -120,6 +137,9 @@ if (isset($_POST['enviar'])) {
                             </div>
 
                             <div>
+                            <p><?php if(isset($_POST['enviar']))
+                            {echo $e->getMessage(); }
+                            ?></p>
                                 <button type="submit" name="enviar"
                                     class="flex w-full justify-center rounded-md bg-neutral-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-neutral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Entrar</button>
                             </div>
@@ -129,7 +149,7 @@ if (isset($_POST['enviar'])) {
             </div>
         </div>
         <div class="col p-0" id="imgesquerdo">
-            <img src="img/photo-1636953056323-9c09fdd74fa6.jpg">
+            <img src="../img/photo-1636953056323-9c09fdd74fa6.jpg">
         </div>
     </div>
     <footer class="bg-black">
@@ -145,16 +165,16 @@ if (isset($_POST['enviar'])) {
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="../html/termo.html" class="hover:underline">Termo de Uso</a>
+                                <a href="../php/termo.php" class="hover:underline">Termo de Uso</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/limitesdepeso.html" class="hover:underline">Política de Peso</a>
+                                <a href="../php/limitesdepeso.php" class="hover:underline">Política de Peso</a>
                             </li>
                             <li class="mb-4">
                                 <a href="../php/politica.php" class="hover:underline">Política de Reembolso</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Suporte</a>
+                                <a href="../php/suporte.php" class="hover:underline">Suporte</a>
                             </li>
                         </ul>
                     </div>
@@ -168,7 +188,7 @@ if (isset($_POST['enviar'])) {
                                 <a href="../php/RecrutamentoMotorista.php" class="hover:underline">Carreiras</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Contato</a>
+                                <a href="../php/suporte.php" class="hover:underline">Contato</a>
                             </li>
                         </ul>
                     </div>

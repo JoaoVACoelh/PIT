@@ -2,16 +2,18 @@
 header('Content-Type: text/html; charset=utf-8');
 ?>
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Suporte</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
-    <title>Limites de Peso</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -67,43 +69,107 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </header>
     <main
-        class="flex content-center items-center flex-col w-full h-fit bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat">
-        <div id="term" class="text-2xl w-3/4 text-justify bg-black/75 p-5 text-white rounded-lg mt-5 mb-5">
-            <h1 class="font-bold">Nossas politicas de cancelamento e reembolso</h1>
-            <p class="p-5">A política a seguir descreve os termos e condições relacionados ao cancelamento de serviços e
-                reembolso oferecidos pelo BoxUP para mudanças residenciais: Cancelamento de Serviços</p>
-            <p class="p-5">
-                <b>1.1 Cancelamento por parte do Cliente</b><br>
-                Caso o cliente deseje cancelar os serviços contratados, é necessário notificar o BoxUP com antecedência
-                mínima de X dias antes da data agendada para a mudança. O cancelamento deve ser feito por escrito, via
-                e-mail ou formulário de contato disponibilizado no site do BoxUP. O cliente pode estar sujeito a uma
-                taxa de cancelamento, dependendo do tempo restante até a data agendada para a mudança. Essa taxa será
-                informada no momento da contratação dos serviços.
-                </ul>
-            </p>
-            <p class="p-5">
-                <b>1.2 Cancelamento por parte do BoxUP:</b><br>
-                O BoxUP reserva-se o direito de cancelar ou adiar os serviços contratados em casos excepcionais, como
-                condições climáticas extremas, situações de força maior ou circunstâncias imprevistas que impossibilitem
-                a realização da mudança. Em caso de cancelamento por parte do BoxUP, todas as taxas pagas pelo cliente
-                serão reembolsadas integralmente. Reembolso
-            </p>
-            <p class="p-5">
-                <b>2.2. Reembolso em caso de cancelamento por parte do BoxUP:</b><br>
-                Em caso de cancelamento por parte do BoxUP, o valor total pago pelo cliente será reembolsado
-                integralmente, sem quaisquer deduções. O reembolso será processado no prazo de X dias úteis após o
-                cancelamento ser confirmado e será feito pelo mesmo método de pagamento utilizado na contratação dos
-                serviços.
-            </p>
-            <p class="p-5">
-                <b>2.2 Reembolso em caso de cancelamento por parte do Cliente:</b><br>
-                Caso o cliente cancele os serviços contratados com antecedência mínima de X dias antes da data agendada
-                para a mudança, o BoxUP irá reembolsar o valor pago, deduzindo a taxa de cancelamento, se aplicável. O
-                reembolso será processado no prazo de X dias úteis após a confirmação do cancelamento e será feito pelo
-                mesmo método de pagamento utilizado na contratação dos serviços.
-            </p>
+        class="flex justify-center items-center flex-col bg-[url('../img/bannersup.webp')] bg-cover bg-no-repeat h-screen ">
+        <p class="text-2xl">Olá! Esta é a Equipe de Suporte.</p>
+        <p class="text-2xl mb-10 mt-2">Como podemos ajudar?</p>
+        <div class="grid grid-cols-2 gap-4 p-4 justify-center ">
+            <div
+                class="rounded bg-neutral-50 m-2 w-3/4 flex items-center justify-self-end justify-between flex-col p-3">
+                <div class="flex justify-center">
+                    <img class="w-1/2" src="../img/whatsapp_PNG16.png">
+                </div>
+                <div class="text-center border-t-2 border-zinc-900 w-full h-20">
+                    <p class="font-semibold break-words p-2">Whatsapp <br> 99142-7778</p>
+                </div>
+            </div>
+            <div
+                class="rounded bg-neutral-50 m-2 w-3/4 items-center justify-self-start justify-between flex-col flex-col p-3">
+                <div class="flex justify-center">
+                    <img class="w-1/2" src="../img/732026.png">
+                </div>
+                <div class="text-center border-t-2 border-zinc-900 w-full h-20">
+                    <p class="font-semibold break-words p-2">E-mail <br> joaoarantes877@gmail.com</p>
+                </div>
+            </div>
         </div>
     </main>
+    <div class="bg-black flex justify-center items-center w-full flex-col text-justify">
+        <h1 class="text-white font-semibold text-2xl p-4">FAQ</h1>
+        <div class="p-3 w-3/4">
+            <p class="text-white break-words font-light p-2">
+                - Quais serviços sua empresa de mudança oferece?
+                Nossa empresa de mudança oferece uma ampla gama de serviços para tornar sua mudança mais fácil e
+                tranquila. Nossos principais serviços incluem:
+                Embalagem profissional dos seus pertences;
+                Desmontagem e montagem de móveis;
+                Carregamento seguro e descarregamento no novo local;
+                Transporte seguro e eficiente de seus pertences;
+                Serviços de armazenamento temporário, se necessário;
+                Opções de seguro para proteger seus pertences durante o transporte.
+            </p>
+            <p class="text-white break-words font-light p-2">
+                - Por que devo contratar sua empresa de mudança?
+                Existem várias razões pelas quais você deve considerar contratar nossa empresa de mudança:
+                Temos anos de experiência no setor, com uma equipe de profissionais treinados e qualificados.
+                Utilizamos materiais de embalagem de alta qualidade para garantir a proteção dos seus pertences.
+                Temos uma frota de veículos adequados para lidar com qualquer tamanho de mudança.
+                Oferecemos um serviço personalizado e flexível para atender às suas necessidades específicas.
+                Nosso objetivo é proporcionar uma experiência de mudança tranquila e livre de estresse para todos os
+                nossos clientes.
+            </p>
+            <p class="text-white break-words font-light p-2">
+                - Como posso obter um orçamento para minha mudança?
+                Você pode obter um orçamento personalizado para sua mudança entrando em contato conosco. Podemos agendar
+                uma visita ao seu local atual para avaliar a quantidade de itens a serem transportados e discutir
+                quaisquer requisitos especiais. Com base nessas informações, forneceremos um orçamento detalhado e
+                transparente para o seu serviço de mudança.
+            </p>
+        </div>
+    </div>
+    <div class="w-full flex items-center flex-col text-justify">
+        <h1 class="text-black font-semibold text-xl p-4 text-center">Licenças e Seguros para sua Empresa de Transporte
+        </h1>
+        <p class="w-3/4 p-4 text-xs"> Licenças:
+            Ao iniciar uma empresa de transporte, é importante garantir que você esteja em conformidade com as
+            regulamentações e licenças necessárias para operar legalmente. Aqui estão algumas licenças e autorizações
+            comuns necessárias para uma empresa de transporte:
+            Licença da Agência Nacional de Transportes Terrestres (ANTT): No Brasil, a ANTT regula o transporte
+            rodoviário de cargas. É necessário obter uma licença junto à ANTT para operar legalmente no setor de
+            transporte rodoviário de cargas.
+
+            Registro Nacional de Transportadores Rodoviários de Cargas (RNTRC): O RNTRC é um registro obrigatório para
+            transportadores rodoviários de cargas no Brasil. Ele fornece um número de identificação único para sua
+            empresa e seus veículos.
+
+            Registro e Licença Municipal: Verifique com a prefeitura da sua cidade se é necessário obter uma licença
+            municipal para operar sua empresa de transporte. Os requisitos podem variar de acordo com a localidade.
+
+            Registro na Junta Comercial: Faça o registro da sua empresa na Junta Comercial do seu estado para formalizar
+            sua atividade como empresa de transporte.
+
+            Lembre-se de verificar com as autoridades locais e órgãos reguladores para obter informações atualizadas
+            sobre as licenças específicas exigidas na sua região.
+
+            Seguros:
+            O setor de transporte envolve riscos consideráveis, portanto, é fundamental garantir que sua empresa esteja
+            adequadamente segurada. Aqui estão alguns seguros importantes para uma empresa de transporte:
+            Seguro de Responsabilidade Civil: Esse seguro cobre danos causados a terceiros durante o transporte, como
+            danos a propriedades ou lesões pessoais. Ele ajuda a proteger sua empresa em caso de reclamações e processos
+            judiciais.
+
+            Seguro de Carga: Esse seguro cobre danos ou perdas às cargas que você transporta. Ele oferece proteção
+            contra roubo, acidentes, incêndios e outros eventos que possam causar danos à carga.
+
+            Seguro de Responsabilidade do Transportador: Esse seguro cobre danos ou perdas às cargas enquanto estão sob
+            sua responsabilidade. Ele é importante, especialmente se você for responsável pela carga durante todo o
+            processo de transporte.
+
+            Seguro de Acidentes Pessoais: Esse seguro oferece cobertura para seus motoristas e funcionários em caso de
+            acidentes ou lesões durante o trabalho. Ele ajuda a garantir a segurança e o bem-estar da sua equipe.
+
+            Seguro de Veículos: É essencial ter um seguro abrangente para sua frota de veículos. Isso inclui cobertura
+            contra danos, colisões, roubo e responsabilidade civil.</p>
+    </div>
     <footer class="bg-black">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
@@ -113,7 +179,7 @@ header('Content-Type: text/html; charset=utf-8');
                     </a>
                 </div>
                 <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-                <div>
+                    <div>
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
@@ -215,7 +281,6 @@ header('Content-Type: text/html; charset=utf-8');
         </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
-</body>
 </body>
 
 </html>
