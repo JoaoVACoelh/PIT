@@ -1,3 +1,7 @@
+<?php
+header('Content-Type: text/html; charset=utf-8');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,8 +38,8 @@
             <div id="dropdownDots"
                 class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-                <li>
-                        <a href="../html/home.html"
+                    <li>
+                    <a href="../php/home.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
                     </li>
                     <li>
@@ -43,14 +47,25 @@
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
                     </li>
                     <li>
-                        <a href="../php/loginUsuario.php"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
+                        <a href="../php/logout.php"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">LOGOUT</a>
                     </li>
                 </ul>
                 <div class="py-2">
-                    <a href="#"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
-                        Conta</a>
+                    <a href="../php/loginUsuario.php"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><label>
+                            <?php session_start();
+                            if(isset($_SESSION['login_session']))
+                            {
+                                echo $_SESSION['login_session'];
+                            }
+                            else
+                            {
+                                echo ("FAÇA LOGIN");
+                            } 
+                            ?>
+                        </label>
+                    </a>
                 </div>
             </div>
         </div>
@@ -83,16 +98,16 @@
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="../html/termo.html" class="hover:underline">Termo de Uso</a>
+                                <a href="../php/termo.php" class="hover:underline">Termo de Uso</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/limitesdepeso.html" class="hover:underline">Política de Peso</a>
+                                <a href="../php/limitesdepeso.php" class="hover:underline">Política de Peso</a>
                             </li>
                             <li class="mb-4">
                                 <a href="../php/politica.php" class="hover:underline">Política de Reembolso</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Suporte</a>
+                                <a href="../php/suporte.php" class="hover:underline">Suporte</a>
                             </li>
                         </ul>
                     </div>

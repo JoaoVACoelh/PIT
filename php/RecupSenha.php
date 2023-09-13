@@ -2,12 +2,11 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'lib/vendor/autoload.php';
+require '../lib/vendor/autoload.php';
 include('conexao.php');
 
 
@@ -99,11 +98,10 @@ if (isset($_POST['ok'])) {
 
       <!-- Dropdown menu -->
       <div id="dropdownDots"
-        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-          <li>
-          <li>
-                        <a href="../html/home.html"
+                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+                    <li>
+                    <a href="../php/home.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
                     </li>
                     <li>
@@ -111,16 +109,11 @@ if (isset($_POST['ok'])) {
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
                     </li>
                     <li>
-                        <a href="../php/loginUsuario.php"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
+                        <a href="../php/logout.php"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">LOGOUT</a>
                     </li>
-        </ul>
-        <div class="py-2">
-          <a href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
-            Conta</a>
-        </div>
-      </div>
+                </ul>
+            </div>
     </div>
   </header>
   <div id="gridprincipal">
@@ -152,7 +145,7 @@ if (isset($_POST['ok'])) {
     </div>
 
     <div class="col p-0" id="imgesquerdo">
-      <img src="img/photo-1636953056323-9c09fdd74fa6.jpg">
+      <img src="../img/photo-1636953056323-9c09fdd74fa6.jpg">
     </div>
   </div>
   <footer class="bg-black">
@@ -168,16 +161,16 @@ if (isset($_POST['ok'])) {
                         <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
                         <ul class="text-gray-500 dark:text-gray-400 font-medium">
                             <li class="mb-4">
-                                <a href="../html/termo.html" class="hover:underline">Termo de Uso</a>
+                                <a href="../php/termo.php" class="hover:underline">Termo de Uso</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/limitesdepeso.html" class="hover:underline">Política de Peso</a>
+                                <a href="../php/limitesdepeso.php" class="hover:underline">Política de Peso</a>
                             </li>
                             <li class="mb-4">
                                 <a href="../php/politica.php" class="hover:underline">Política de Reembolso</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Suporte</a>
+                                <a href="../php/suporte.php" class="hover:underline">Suporte</a>
                             </li>
                         </ul>
                     </div>
@@ -191,7 +184,7 @@ if (isset($_POST['ok'])) {
                                 <a href="../php/RecrutamentoMotorista.php" class="hover:underline">Carreiras</a>
                             </li>
                             <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Contato</a>
+                                <a href="../php/suporte.php" class="hover:underline">Contato</a>
                             </li>
                         </ul>
                     </div>

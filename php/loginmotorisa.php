@@ -1,23 +1,44 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-include('conexao.php');
 $resultado = "";
 
+
 if (isset($_POST['enviar'])) {
-  $banco = new PDO("mysql:host=localhost;dbname=pit", "root", "");
-  $cpf = $_POST['cpf'];
+  try {
+    $conn = new PDO("mysql:host=localhost;dbname=pit", "root", "");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  } catch (PDOException $e) {
+    echo "Falha na CONEXAO" . $e->getMessage();
+    die();
+  }
+  $rg = $_POST['rg'];
   $senha = $_POST['password'];
   $email = $_POST['email'];
-  $sql = "SELECT * FROM cadastromotorista WHERE cpf = '$cpf' AND senha = '$senha' AND email = '$email' ";
-  $result = $banco->query($sql);
 
-  if ($result->rowCount() > 0) {
-    header("Location: home.html");
-    exit();
-  } else {
-    $resultado = "erro";
 
-    echo $resultado;
+  $sql = "SELECT usuario from cadastromotorista WHERE rg = '$rg' AND senha = '$senha' AND email = '$email'";
+  $select = $conn->query($sql);
+
+  try {
+    if ($select->rowCount() > 0) {
+      if (!$select) {
+        die("Erro na consulta: " . $conn->errorInfo()[2]);
+      }
+      if ($row = $select->fetch(PDO::FETCH_ASSOC)) {
+        $row['usuario'];
+      }
+      
+      session_start();
+      $_SESSION['login2_session'] = $row['usuario'];
+      $_SESSION['rg_session'] = $rg;
+      session_id();
+      header("Location: ../php/home.php");
+      exit();
+    } else {
+      throw new Exception('ERRO NO LOGIN', '1');
+    }
+  } catch (Exception $e) {
+    $e->getMessage();
   }
 
 }
@@ -34,7 +55,7 @@ if (isset($_POST['enviar'])) {
   <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
   <title>Login de Usuário</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="js/mascara.js"></script>
+  <script src="../js/mascara.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
 </head>
 
@@ -58,24 +79,14 @@ if (isset($_POST['enviar'])) {
       <div id="dropdownDots"
         class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
-        <li>
-                        <a href="../html/home.html"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
-                    </li>
-                    <li>
-                        <a href="../php/loginmotorisa.php"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
-                    </li>
-                    <li>
-                        <a href="../php/loginUsuario.php"
-                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Usuarios</a>
-                    </li>
-        </ul>
-        <div class="py-2">
-          <a href="#"
-            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sua
-            Conta</a>
-        </div>
+          <li>
+            <a href="../php/home.php"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Home</a>
+          </li>
+          <li>
+            <a href="../php/loginmotorisa.php"
+              class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Motorista</a>
+          </li>
       </div>
     </div>
   </header>
@@ -98,9 +109,9 @@ if (isset($_POST['enviar'])) {
           <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form class="space-y-6" action="#" method="POST">
               <div>
-                <label for="nome" class="block text-sm font-medium leading-6 text-gray-900">CPF</label>
+                <label for="nome" class="block text-sm font-medium leading-6 text-gray-900">RG</label>
                 <div class="mt-2">
-                  <input id="cpf" name="cpf" type="text" oninput=cpfe() maxlength="14" required
+                  <input id="rg" name="rg" type="text" oninput=rge() maxlength="11" required
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 </div>
               </div>
@@ -128,6 +139,9 @@ if (isset($_POST['enviar'])) {
               </div>
 
               <div>
+              <p><?php if(isset($_POST['enviar']))
+                            {echo $e->getMessage(); }
+                            ?></p>
                 <button type="submit" name="enviar"
                   class="flex w-full justify-center rounded-md bg-neutral-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-neutral-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Entrar</button>
               </div>
@@ -137,7 +151,7 @@ if (isset($_POST['enviar'])) {
       </div>
     </div>
     <div class="col p-0" id="imgesquerdo">
-      <img src="img/photo-1636953056323-9c09fdd74fa6.jpg">
+      <img src="../img/photo-1636953056323-9c09fdd74fa6.jpg">
     </div>
   </div>
   <footer class="bg-black">
@@ -149,37 +163,37 @@ if (isset($_POST['enviar'])) {
           </a>
         </div>
         <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-        <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
-                        <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                            <li class="mb-4">
-                                <a href="../html/termo.html" class="hover:underline">Termo de Uso</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="../html/limitesdepeso.html" class="hover:underline">Política de Peso</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="../php/politica.php" class="hover:underline">Política de Reembolso</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Suporte</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Empresa</h2>
-                        <ul class="text-gray-500 dark:text-gray-400 font-medium">
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline ">Sobre nós</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="../php/RecrutamentoMotorista.php" class="hover:underline">Carreiras</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="../html/suporte.html" class="hover:underline">Contato</a>
-                            </li>
-                        </ul>
-                    </div>
+          <div>
+            <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Recursos</h2>
+            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+              <li class="mb-4">
+                <a href="../php/termo.php" class="hover:underline">Termo de Uso</a>
+              </li>
+              <li class="mb-4">
+                <a href="../php/limitesdepeso.php" class="hover:underline">Política de Peso</a>
+              </li>
+              <li class="mb-4">
+                <a href="../php/politica.php" class="hover:underline">Política de Reembolso</a>
+              </li>
+              <li class="mb-4">
+                <a href="../php/suporte.php" class="hover:underline">Suporte</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Empresa</h2>
+            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+              <li class="mb-4">
+                <a href="#" class="hover:underline ">Sobre nós</a>
+              </li>
+              <li class="mb-4">
+                <a href="../php/RecrutamentoMotorista.php" class="hover:underline">Carreiras</a>
+              </li>
+              <li class="mb-4">
+                <a href="../php/suporte.php" class="hover:underline">Contato</a>
+              </li>
+            </ul>
+          </div>
           <div>
             <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase">Serviços</h2>
             <ul class="text-gray-500 dark:text-gray-400 font-medium">
