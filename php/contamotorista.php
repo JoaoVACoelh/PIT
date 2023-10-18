@@ -48,6 +48,7 @@
                 <div class="flex flex-col justify-center px-6 w-full py-12 lg:px-8 bg-zinc-100 rounded-lg">
                     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <p>CONTA</p>
+                        <a href="../php/Registrar_caminhao.php"><P>CADASTRAR CAMINHAO</p></a>
                     </div>
                 </div>
             </div>

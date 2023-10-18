@@ -87,6 +87,10 @@ if (isset($_POST['motorista'])) {
                         <a href="../php/logout.php"
                             class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">LOGOUT</a>
                     </li>
+                    <li>
+                        <a href="../php/Exibir_lista.php"
+                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">CAMINHÕES</a>
+                    </li>
                 </ul>
                 <div class="py-2">
                     <form method="POST" action="#">

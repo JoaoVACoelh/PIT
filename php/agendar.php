@@ -1,17 +1,17 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 $resultado = "";
-$_SESSION['login_session'] = "";
 session_start();
 
+try {
+    $conn = new PDO("mysql:host=localhost;dbname=pit", "root", "");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Falha na CONEXAO" . $e->getMessage();
+    die();
+}
+
 if (isset($_POST['enviar'])) {
-    try {
-        $conn = new PDO("mysql:host=localhost;dbname=pit", "root", "");
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo "Falha na CONEXAO" . $e->getMessage();
-        die();
-    }
     $data = $_POST['date'];
     $horario = $_POST['time'];
     $endereco = $_POST['ENDERECO'];
@@ -32,6 +32,16 @@ if (isset($_POST['enviar'])) {
         $e->getMessage();
     }
 }
+if (isset($_POST['conta'])) {
+    $cpf = $_SESSION['cpf_session'];
+    $sql = "SELECT * FROM loginusuario WHERE cpf = '$cpf'";
+    $result = $conn->query($sql);
+    if ($result->rowCount() > 0) {
+        header("Location: ../php/contausuario.php");
+    } else {
+        header("Location: ../php/loginUsuario.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +52,7 @@ if (isset($_POST['enviar'])) {
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../css/main2.css'>
-    <title>Login de Usuário</title>
+    <title>Agendamento</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
 </head>
@@ -81,18 +91,18 @@ if (isset($_POST['enviar'])) {
                     </li>
                 </ul>
                 <div class="py-2">
-                    <a href="../php/loginUsuario.php"
-                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><label>
+                    <form method="POST" action="#">
+                        <button type="submit" name="conta"
+                            class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                             <?php
-                            session_start();
                             if (isset($_SESSION['login_session'])) {
                                 echo $_SESSION['login_session'];
                             } else {
                                 echo ("FAÇA LOGIN");
                             }
                             ?>
-                        </label>
-                    </a>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
